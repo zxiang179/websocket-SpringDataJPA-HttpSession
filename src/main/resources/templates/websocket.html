@@ -1,0 +1,56 @@
+<!--访问地址：http://localhost:8080/websocket  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="http://cdn.bootcss.com/sockjs-client/1.0.3/sockjs.min.js"></script>
+<script type="text/javascript"
+	src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+	
+</head>
+<body>
+	<div>
+		<input type="text" size="30" name="message" id="message" /><br/>
+		<input type="button" value="send" onclick="send()" />
+	</div>
+	<div id="msgcount"></div>
+</body>
+
+	<script type="text/javascript">
+	var websocket;
+	var url = "ws://localhost:8080/webSocketServer";
+	
+	if ('WebSocket' in window) {
+		websocket = new WebSocket(url);
+	} else if ('MozWebSocket' in window) {
+		websocket = new MozWebSocket(url);
+	} else {
+		websocket = new SockJS("http://localhost:8080//test20-websocket/sockjs/webSocketServer");
+	}
+	
+	websocket.onopen = function(evnt) {
+		
+	};
+	
+	websocket.onmessage = function(evnt) {
+		$("#msgcount").prepend("<p>" + evnt.data + "</p>");
+	};
+	
+	websocket.onerror = function(evnt) {
+	
+	};
+	
+	websocket.onclose = function(evnt) {
+	
+	}
+	
+	function send() {
+		websocket.send(document.getElementById("message").value);
+	}
+	
+	</script>
+
+</html>
